@@ -1,47 +1,46 @@
 package com.rho.studio.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.rho.studio.ui.ui.theme.UITheme
 
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
+import com.rho.studio.ui.databinding.ActivityMainBinding
+import com.rho.studio.ui.viewmodel.LoginViewModel
+
+@BindingAdapter("toastMessage")
+fun runMe(view: View, message: String?) { // Added ? for null safety
+    if (!message.isNullOrEmpty()) {      // Checked for null/empty
+        Toast.makeText(view.context, message, Toast.LENGTH_SHORT).show()
+    }
+}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            UITheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
+        // ViewModel updates the Model after observing changes in the View
+        // Model will also update the View via the ViewModel
+        val activityMainBinding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        activityMainBinding.loginViewModel = LoginViewModel()
+        activityMainBinding.executePendingBindings()
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    UITheme {
-        Greeting("Android")
-    }
-}
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier
+//    )
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    UITheme {
+//        Greeting("Android")
+//    }
+//}
