@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- binding object of ViewModel to the XML layout -->
     <data>
@@ -16,7 +15,20 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/background_light_gray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rho.Studio app"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/title_gray"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="20dp"
+            android:letterSpacing="0.1"
+            android:fontFamily="sans-serif-medium"/>
 
         <!-- EditText field for the Email -->
         <EditText
@@ -27,7 +39,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
             android:autofillHints="Email"
-            android:hint="Enter your Email ID"
+            android:hint="@string/enter_your_email_id"
             android:inputType="textEmailAddress"
             android:padding="8dp"
             android:text="@={loginViewModel.userEmail}" />
@@ -40,7 +52,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:autofillHints="Password"
-            android:hint="Enter your password"
+            android:hint="@string/enter_your_password"
             android:inputType="textPassword"
             android:padding="8dp"
             android:text="@={loginViewModel.userPassword}" />
@@ -51,8 +63,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:onClick="@{()-> loginViewModel.onButtonClicked()}"
-            android:text="Login"
+            android:text="@string/login"
             android:textSize="24sp"
+            android:background="@drawable/button_selector"
+            android:textColor="@color/background_light_gray"
             app:toastMessage="@{loginViewModel.toastMessage}" />
 
     </LinearLayout>
