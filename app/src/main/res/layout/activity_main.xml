@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+     * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
+     * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
+     * ██████╔╝███████║██║   ██║    ███████╗   ██║   ██║   ██║██║  ██║██║██║   ██║
+     * ██╔══██╗██╔══██║██║   ██║    ╚════██║   ██║   ██║   ██║██║  ██║██║██║   ██║
+     * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
+     * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
+     *
+     * ==========================================================================
+     * File:         activity_main.xml
+     * Author:       Alexis Tercero
+     * Email:        alexis.tercero@rho.studio
+     * Date:         2026-02-12
+     * ==========================================================================
+     * Description:
+     *      MVVM View, enable data binding for LoginViewModel and
+     *      BindingAdapters.
+     * ==========================================================================
+    -->
+    <!-- binding object of ViewModel to the XML layout -->
+    <data>
+        <variable
+            name="loginViewModel"
+            type="com.rho.studio.ui.viewmodel.LoginViewModel" />
+    </data>
+
+    <!-- Provided Linear layout for the activity components -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:background="@color/background_light_gray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rho_studio_app"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/title_gray"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="20dp"
+            android:letterSpacing="0.1"
+            android:fontFamily="sans-serif-medium"/>
+
+        <!-- EditText field for the Email -->
+        <EditText
+            android:id="@+id/inEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:autofillHints="Email"
+            android:hint="@string/enter_your_email_id"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:text="@={loginViewModel.userEmail}" />
+
+        <!-- EditText field for the password -->
+        <EditText
+            android:id="@+id/inPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:autofillHints="Password"
+            android:hint="@string/enter_your_password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:text="@={loginViewModel.userPassword}" />
+
+        <!-- Login Button of the activity -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{()-> loginViewModel.onButtonClicked()}"
+            android:text="@string/login"
+            android:textSize="24sp"
+            android:background="@drawable/button_selector"
+            android:textColor="@color/background_light_gray"
+            app:toastMessage="@{loginViewModel.toastMessage}" />
+
+    </LinearLayout>
+</layout>

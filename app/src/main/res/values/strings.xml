@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UI</string>
+    <string name="login">Login</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_email_id">Enter your Email ID</string>
+    <string name="rho_studio_app">Rho.Studio app</string>
+</resources>
