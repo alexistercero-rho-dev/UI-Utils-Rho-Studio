@@ -2,6 +2,25 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--
+     * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
+     * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
+     * ██████╔╝███████║██║   ██║    ███████╗   ██║   ██║   ██║██║  ██║██║██║   ██║
+     * ██╔══██╗██╔══██║██║   ██║    ╚════██║   ██║   ██║   ██║██║  ██║██║██║   ██║
+     * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
+     * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
+     *
+     * ==========================================================================
+     * File:         activity_main.xml
+     * Author:       Alexis Tercero
+     * Email:        alexis.tercero@rho.studio
+     * Date:         2026-02-12
+     * ==========================================================================
+     * Description:
+     *      MVVM View, enable data binding for LoginViewModel and
+     *      BindingAdapters.
+     * ==========================================================================
+    -->
     <!-- binding object of ViewModel to the XML layout -->
     <data>
         <variable
@@ -21,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rho.Studio app"
+            android:text="@string/rho_studio_app"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="@color/title_gray"

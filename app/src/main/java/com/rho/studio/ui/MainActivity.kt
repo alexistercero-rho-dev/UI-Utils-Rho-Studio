@@ -1,3 +1,21 @@
+/*
+ * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
+ * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
+ * ██████╔╝███████║██║   ██║    ███████╗   ██║   ██║   ██║██║  ██║██║██║   ██║
+ * ██╔══██╗██╔══██║██║   ██║    ╚════██║   ██║   ██║   ██║██║  ██║██║██║   ██║
+ * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
+ * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
+ *
+ * ==========================================================================
+ * File:         MainActivity.kt
+ * Author:       Alexis Tercero
+ * Email:        alexis.tercero@rho.studio
+ * Date:         2026-02-12
+ * ==========================================================================
+ * Description:
+ *      MVVM Login, min activity with data binding.
+ * ==========================================================================
+ */
 package com.rho.studio.ui
 
 import android.os.Bundle
@@ -28,19 +46,3 @@ class MainActivity : ComponentActivity() {
         activityMainBinding.executePendingBindings()
     }
 }
-
-//@Composable
-//fun Greeting(name: String, modifier: Modifier = Modifier) {
-//    Text(
-//        text = "Hello $name!",
-//        modifier = modifier
-//    )
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    UITheme {
-//        Greeting("Android")
-//    }
-//}
