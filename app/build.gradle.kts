@@ -37,6 +37,22 @@ android {
     buildFeatures {
         compose = true
         dataBinding = true
+        viewBinding = true  // Optional but recommended
+    }
+
+    sourceSets {
+        getByName("main") {
+            // Java/Kotlin source directories
+            java.srcDirs(
+                "src/main/java"  // This includes everything under java/
+                // No need to list each feature separately
+            )
+
+            // Resource directories - THIS IS KEY FOR FEATURE RESOURCES
+            res.srcDirs(
+                "src/main/res"                          // Global resources
+            )
+        }
     }
 }
 
@@ -58,6 +74,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.gson)
+    implementation(libs.material)
+    kapt(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
