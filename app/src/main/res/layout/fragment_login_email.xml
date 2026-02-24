@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <!--
      * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
      * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
@@ -11,46 +10,40 @@
      * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
      *
      * ==========================================================================
-     * File:         activity_main.xml
+     * File:         fragment_login_email.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
-     * Date:         2026-02-12
+     * Date:         2026-02-23
      * ==========================================================================
      * Description:
-     *      MVVM View, enable data binding for LoginViewModel and
-     *      BindingAdapters.
+     *      Email input fragment enable two way binding
      * ==========================================================================
     -->
-    <!-- binding object of ViewModel to the XML layout -->
     <data>
         <variable
-            name="sessionManager"
-            type="com.rho.studio.ui.core.manager.SessionManager" />
+            name="viewModel"
+            type="com.rho.studio.ui.features.auth.LoginViewModel" />
     </data>
 
-    <!-- Provided Linear layout for the activity components -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="@string/email_hint"
+        app:errorEnabled="true"
+        app:error="@{viewModel.emailError}"
+        app:startIconDrawable="@drawable/ic_email"
+        app:endIconMode="clear_text">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_container"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailInput"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="yes"
+            android:autofillHints="emailAddress"
+            android:text="@={viewModel.credentials.email}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </layout>

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.parcelize)
     id("kotlin-kapt")
 }
 
@@ -29,15 +30,36 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
     buildFeatures {
         compose = true
         dataBinding = true
+        viewBinding = true  // Optional but recommended
+    }
+
+    sourceSets {
+        getByName("main") {
+            // Java/Kotlin source directories
+            java.srcDirs(
+                "src/main/java"  // This includes everything under java/
+                // No need to list each feature separately
+            )
+
+            // Resource directories - THIS IS KEY FOR FEATURE RESOURCES
+            res.srcDirs(
+                "src/main/res"                          // Global resources
+            )
+        }
+    }
+}
+
+// Add the new DSL here
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
@@ -51,6 +73,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.gson)
+    implementation(libs.material)
+    kapt(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
