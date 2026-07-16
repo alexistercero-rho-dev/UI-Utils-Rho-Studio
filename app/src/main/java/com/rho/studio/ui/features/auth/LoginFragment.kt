@@ -10,7 +10,7 @@
  * File:         LoginFragment.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-02-23
+ * Date:         2026-07-16
  * ==============================================================================================
  *  LoginFragment serves as the primary orchestration layer for the authentication feature.
  *  It acts as a parent container that manages the lifecycle, state observation,
@@ -21,9 +21,7 @@
 package com.rho.studio.ui.features.auth;
 
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.rho.studio.ui.BR
 import com.rho.studio.ui.R
 import com.rho.studio.ui.core.base.BaseFragment
@@ -31,7 +29,6 @@ import com.rho.studio.ui.databinding.FragmentLoginBinding
 import com.rho.studio.ui.features.auth.components.LoginButtonFragment
 import com.rho.studio.ui.features.auth.components.LoginEmailFragment
 import com.rho.studio.ui.features.auth.components.LoginPasswordFragment
-import kotlinx.coroutines.launch
 
 
 /**
@@ -78,25 +75,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
-    override fun setupObservers() {
-        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
-            message?.let { showToast(it) }
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) { error ->
-            error?.let { showError(it) }
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            updateLoadingState(isLoading)
-        }
-    }
-
     override fun cleanupBinding() {
+        // Enforce clean slate policy defined in feature docs
         viewModel.clearToastMessage()
         viewModel.clearError()
     }
-
     private fun setupChildFragments() {
         childFragmentManager.beginTransaction().apply {
             replace(R.id.email_container, LoginEmailFragment())
@@ -106,20 +89,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
-    private fun showToast(message: String) {
-        lifecycleScope.launch {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            viewModel.clearToastMessage()
-        }
-    }
-
-    private fun showError(message: String) {
-        lifecycleScope.launch {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun updateLoadingState(isLoading: Boolean) {
+    override fun onLoadingStateChanged(isLoading: Boolean) {
         withBinding { binding ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
