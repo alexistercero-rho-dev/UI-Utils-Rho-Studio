@@ -10,7 +10,7 @@
  * File:         LoginButtonFragment.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-02-23
+ * Date:         2026-07-16
  * ==============================================================================================
  *  Description: Manages the primary action button and loading
  *               state for the login flow.
@@ -88,7 +88,6 @@ class LoginButtonFragment : BaseFragment<FragmentLoginButtonBinding, LoginViewMo
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             withBinding { binding ->
                 binding.loginButton.isEnabled = !isLoading && (viewModel.isFormValid.value ?: false)
-                binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
         }
     }
