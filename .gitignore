@@ -9,7 +9,6 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-.idea/
 
 # Package Files #
 *.jar
@@ -28,3 +27,6 @@ replay_pid*
 .kotlin/
 *.lock
 *.bin
+.idea/
+.gradle/
+build/
