@@ -18,7 +18,7 @@
  *  to leverage standardized ViewBinding and ViewModel integration.
  * ==============================================================================================
  */
-package com.rho.studio.ui.features.auth;
+package com.rho.studio.ui.features.auth
 
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -86,12 +86,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
             replace(R.id.password_container, LoginPasswordFragment())
             replace(R.id.button_container, LoginButtonFragment())
             commitAllowingStateLoss()
-        }
-    }
-
-    override fun onLoadingStateChanged(isLoading: Boolean) {
-        withBinding { binding ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 }
