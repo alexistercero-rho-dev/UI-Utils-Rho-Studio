@@ -1,19 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
-    id("kotlin-kapt")
+    alias(libs.plugins.legacy.kapt)
 }
 
 android {
     namespace = "com.rho.studio.ui"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.rho.studio.ui"
-        minSdk = 21
-        targetSdk = 36
+        minSdk = 23
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -76,7 +75,6 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.gson)
     implementation(libs.material)
-    kapt(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
