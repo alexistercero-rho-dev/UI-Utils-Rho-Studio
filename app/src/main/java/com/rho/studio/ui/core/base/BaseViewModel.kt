@@ -65,7 +65,7 @@ abstract class BaseViewModel : ViewModel() {
 
     // Error messages
     private val _error = MutableLiveData<String?>()
-    open val error: LiveData<String?> = _error
+    val error: LiveData<String?> = _error
 
     // Toast messages (one-time)
     private val _toastMessage = MutableLiveData<String?>()
@@ -166,6 +166,6 @@ abstract class BaseViewModel : ViewModel() {
 
     override fun onCleared() {
         cancelAllJobs()  // Prevent memory leaks
-        super.onCleared()
+        //super.onCleared()
     }
 }
