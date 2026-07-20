@@ -10,7 +10,7 @@
  * File:         HomeViewModel.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-16
+ * Date:         2026-07-20
  * ==============================================================================================
  * Description: ViewModel for the Home feature, managing dashboard state and session data.
  * ==============================================================================================
