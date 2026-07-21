@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
     <!--
      * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
      * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
@@ -10,43 +14,36 @@
      * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
      *
      * ==========================================================================
-     * File:         fragment_login_button.xml
+     * File:         nav_graph.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
-     * Date:         2026-07-21
+     * Date:         2026-07-20
      * ==========================================================================
-     * Description: Button fragment triggers login
+     * Description: Jetpack navigation implementation for nav_graph.
      * ==========================================================================
     -->
-    <data>
-        <variable
-            name="viewModel"
-            type="com.rho.studio.ui.features.auth.LoginViewModel" />
-    </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.rho.studio.ui.features.auth.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginButton"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="@{viewModel.isFormValid}"
-            android:text="@string/login"
-            app:rippleColor="@color/silver_gray"
-            app:strokeColor="@color/rho_strong_gray"
-            app:toastMessage="@{viewModel.toastMessage}" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
-
-    </LinearLayout>
-</layout>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.rho.studio.ui.features.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

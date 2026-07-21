@@ -10,7 +10,7 @@
  * File:         MainActivity.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-02-23
+ * Date:         2026-07-20
  * ==========================================================================
  * Description:
  *      This activity follows the "Single Activity" architecture pattern, acting as the
@@ -26,10 +26,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.rho.studio.ui.core.manager.SessionManager
 import com.rho.studio.ui.databinding.ActivityMainBinding
 import com.rho.studio.ui.features.auth.LoginFragment
 import com.rho.studio.ui.features.auth.LoginViewModel
+import com.rho.studio.ui.features.home.HomeFragment
 
 /**
  * The primary entry point and root container for the RHO Studio application.
@@ -56,6 +59,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sessionManager: SessionManager
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var navController: NavController
+    private var isNavGraphReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +83,8 @@ class MainActivity : AppCompatActivity() {
             initializeManagers()
             setupObservers()
 
-            if (savedInstanceState == null) {
-                showInitialScreen()
-            }
+            // Removed showInitialScreen() as handleAuthStateChange 
+            // will be triggered by the SessionManager observer automatically.
         } catch (e: Exception) {
             Log.e("MainActivity", "Initialization failed", e)
             Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
@@ -96,6 +100,10 @@ class MainActivity : AppCompatActivity() {
     private fun initializeBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
+        
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.main_container) as NavHostFragment
+        navController = navHostFragment.navController
     }
 
     private fun initializeManagers() {
@@ -106,12 +114,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
+        // Wait for session check before deciding initial route
+        sessionManager.isSessionChecked.observe(this) { isChecked ->
+            if (isChecked) {
+                handleAuthStateChange(sessionManager.isAuthenticatedSync())
+            } else {
+                // Show loading while checking
+                binding.progressBar.visibility = View.VISIBLE
+            }
+        }
+
         sessionManager.isAuthenticated.observe(this) { isAuthenticated ->
-            handleAuthStateChange(isAuthenticated)
+            // Only handle subsequent changes if graph is already ready
+            if (isNavGraphReady) {
+                handleAuthStateChange(isAuthenticated)
+            }
         }
 
         sessionManager.isLoading.observe(this) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            // Combine with isSessionChecked logic
+            if (sessionManager.isSessionChecked.value == true) {
+                binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            }
         }
 
         sessionManager.error.observe(this) { error ->
@@ -122,27 +146,50 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showInitialScreen() {
-        if (sessionManager.isAuthenticatedSync()) {
-            // TODO: Navigate to home screen
-        } else {
-            showLoginScreen()
+    private fun showLoginScreen() {
+        val currentDest = navController.currentDestination?.id
+        if (currentDest != null && currentDest != R.id.loginFragment) {
+            navController.navigate(R.id.action_homeFragment_to_loginFragment)
         }
     }
 
-    private fun showLoginScreen() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, LoginFragment())
-            .commitAllowingStateLoss()
+    private fun showHomeScreen() {
+        val currentDest = navController.currentDestination?.id
+        if (currentDest != null && currentDest != R.id.homeFragment) {
+            navController.navigate(R.id.action_loginFragment_to_homeFragment)
+        }
     }
 
     private fun handleAuthStateChange(isAuthenticated: Boolean) {
-        if (isAuthenticated) {
-            // TODO: Navigate to home screen
-            loginViewModel.resetForm()
+        Log.d("MainActivity", "Auth state change: isAuthenticated = $isAuthenticated")
+        
+        if (!isNavGraphReady) {
+            setupNavGraph(isAuthenticated)
+            isNavGraphReady = true
+            // Hide initial loading
+            binding.progressBar.visibility = if (sessionManager.isLoading.value == true) 
+                View.VISIBLE else View.GONE
         } else {
-            showLoginScreen()
+            if (isAuthenticated) {
+                showHomeScreen()
+                loginViewModel.resetForm()
+            } else {
+                showLoginScreen()
+            }
         }
+    }
+
+    /**
+     * Set up the Navigation Graph programmatically to avoid the "Start Destination" flicker.
+     */
+    private fun setupNavGraph(isAuthenticated: Boolean) {
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(R.navigation.nav_graph)
+
+        // Choose start destination based on authentication state
+        graph.setStartDestination(if (isAuthenticated) R.id.homeFragment else R.id.loginFragment)
+        
+        navController.graph = graph
     }
 
     fun getLoginViewModel(): LoginViewModel = loginViewModel

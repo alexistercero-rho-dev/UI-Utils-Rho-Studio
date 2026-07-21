@@ -13,7 +13,7 @@
      * File:         fragment_login_email.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
-     * Date:         2026-02-23
+     * Date:         2026-07-21
      * ==========================================================================
      * Description:
      *      Email input fragment enable two way binding
@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/silver_gray"
         android:hint="@string/email_hint"
         app:errorEnabled="true"
         app:error="@{viewModel.emailError}"

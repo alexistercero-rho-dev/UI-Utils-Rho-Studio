@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <!--
      * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
      * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
@@ -10,43 +11,34 @@
      * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
      *
      * ==========================================================================
-     * File:         fragment_login_button.xml
+     * File:         fragment_page_footer.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
      * Date:         2026-07-21
      * ==========================================================================
-     * Description: Button fragment triggers login
+     * Description: Reusable footer for the app.
      * ==========================================================================
     -->
+
     <data>
         <variable
             name="viewModel"
-            type="com.rho.studio.ui.features.auth.LoginViewModel" />
+            type="com.rho.studio.ui.features.home.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:padding="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginButton"
-            style="@style/Widget.MaterialComponents.Button"
+            android:id="@+id/logout_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="@{viewModel.isFormValid}"
-            android:text="@string/login"
-            app:rippleColor="@color/silver_gray"
-            app:strokeColor="@color/rho_strong_gray"
-            app:toastMessage="@{viewModel.toastMessage}" />
+            android:onClick="@{() -> viewModel.logout()}"
+            android:text="@string/logout"
+            android:textColor="@color/rho_red" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
-
-    </LinearLayout>
+    </FrameLayout>
 </layout>

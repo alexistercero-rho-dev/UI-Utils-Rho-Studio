@@ -1,0 +1,18 @@
+[
+  {
+    "id": "S1",
+    "name": "Inventory"
+  },
+  {
+    "id": "S2",
+    "name": "Sales"
+  },
+  {
+    "id": "S3",
+    "name": "Customers"
+  },
+  {
+    "id": "S4",
+    "name": "Reports"
+  }
+]

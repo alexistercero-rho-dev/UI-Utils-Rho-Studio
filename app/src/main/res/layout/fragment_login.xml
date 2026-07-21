@@ -13,7 +13,7 @@
      * File:         fragment_login.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
-     * Date:         2026-02-23
+     * Date:         2026-07-21
      * ==========================================================================
      * Description:
      *      Login container fragment enable databinding
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp"
-        android:background="@color/white">
+        android:background="@drawable/bg_login_gradient">
 
         <TextView
             android:layout_width="wrap_content"

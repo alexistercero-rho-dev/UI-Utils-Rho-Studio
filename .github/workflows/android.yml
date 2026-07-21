@@ -3,7 +3,7 @@ name: Android CI
 on:
   workflow_dispatch: 
   push:
-    branches: [ "6-add-home-page" ]
+    branches: [ "13-home-ui-mvvm" ]
   pull_request:
     branches: [ "dev" ]
 

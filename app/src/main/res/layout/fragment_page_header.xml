@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <!--
      * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
      * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
@@ -10,43 +12,49 @@
      * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
      *
      * ==========================================================================
-     * File:         fragment_login_button.xml
+     * File:         fragment_page_header.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
-     * Date:         2026-07-21
+     * Date:         2026-07-20
      * ==========================================================================
-     * Description: Button fragment triggers login
+     * Description: general and reusable header, needs some work here.
      * ==========================================================================
     -->
+
     <data>
         <variable
             name="viewModel"
-            type="com.rho.studio.ui.features.auth.LoginViewModel" />
+            type="com.rho.studio.ui.features.common.HeaderViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:padding="16dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginButton"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="@{viewModel.isFormValid}"
-            android:text="@string/login"
-            app:rippleColor="@color/silver_gray"
-            app:strokeColor="@color/rho_strong_gray"
-            app:toastMessage="@{viewModel.toastMessage}" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <TextView
+            android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:visibility="gone" />
+            android:text="@{String.format(@string/welcome_user, viewModel.currentUser.name)}"
+            android:textColor="@color/silver_gray"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Welcome, Developer!" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/dashboard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            android:textColor="@color/silver_gray"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcome_text"
+            tools:text="Home Title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

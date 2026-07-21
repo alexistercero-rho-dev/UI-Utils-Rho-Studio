@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <!--
      * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
      * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
@@ -10,43 +12,33 @@
      * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
      *
      * ==========================================================================
-     * File:         fragment_login_button.xml
+     * File:         fragment_home_services.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
      * Date:         2026-07-21
      * ==========================================================================
-     * Description: Button fragment triggers login
+     * Description: A grid (2*2) as a menu that consumes a service/use case.
      * ==========================================================================
     -->
+
     <data>
         <variable
             name="viewModel"
-            type="com.rho.studio.ui.features.auth.LoginViewModel" />
+            type="com.rho.studio.ui.features.home.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginButton"
-            style="@style/Widget.MaterialComponents.Button"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/services_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="@{viewModel.isFormValid}"
-            android:text="@string/login"
-            app:rippleColor="@color/silver_gray"
-            app:strokeColor="@color/rho_strong_gray"
-            app:toastMessage="@{viewModel.toastMessage}" />
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_service" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
-
-    </LinearLayout>
+    </FrameLayout>
 </layout>

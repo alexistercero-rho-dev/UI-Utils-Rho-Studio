@@ -77,6 +77,7 @@ class SessionManager private constructor() {
     private val _currentUser = MutableLiveData<User?>(null)
     private val _isLoading = MutableLiveData(false)
     private val _error = MutableLiveData<String?>(null)
+    private val _isSessionChecked = MutableLiveData(false)
 
     /** # PUBLIC LIVEDATA
      * The rest of the app (UI/ViewModels) can only observe the state.*/
@@ -84,6 +85,7 @@ class SessionManager private constructor() {
     val currentUser: LiveData<User?> = _currentUser
     val isLoading: LiveData<Boolean> = _isLoading
     val error: LiveData<String?> = _error
+    val isSessionChecked: LiveData<Boolean> = _isSessionChecked
 
     // ==================== INITIALIZATION ====================
 
@@ -185,15 +187,26 @@ class SessionManager private constructor() {
         sessionScope.launch {
             try {
                 val user = repository.getUser()
-                user?.let {
-                    withContext(Dispatchers.Main) {
-                        _currentUser.value = it
+                withContext(Dispatchers.Main) {
+                    if (user != null) {
+                        Log.d(TAG, "Found saved session for: ${user.email}")
+                        _currentUser.value = user
                         _isAuthenticated.value = true
+                    } else {
+                        Log.d(TAG, "No saved session found")
+                        _isAuthenticated.value = false
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to load saved user", e)
+                withContext(Dispatchers.Main) {
+                    _isAuthenticated.value = false
+                }
                 clearUserSession()
+            } finally {
+                withContext(Dispatchers.Main) {
+                    _isSessionChecked.value = true
+                }
             }
         }
     }
