@@ -1,3 +1,24 @@
+/**
+ * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
+ * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
+ * ██████╔╝███████║██║   ██║    ███████╗   ██║   ██║   ██║██║  ██║██║██║   ██║
+ * ██╔══██╗██╔══██║██║   ██║    ╚════██║   ██║   ██║   ██║██║  ██║██║██║   ██║
+ * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
+ * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
+ *
+ * ==========================================================================
+ * File:         ServiceAdapter.kt
+ * Author:       Alexis Tercero
+ * Email:        alexis.tercero@rho.studio
+ * Date:         2026-07-21
+ * ==========================================================================
+ * Description:
+ *      RecyclerView adapter responsible for managing and displaying ServiceModule
+ *      items within the Home feature. Utilizes ListAdapter with DiffUtil for
+ *      optimized list updates and Data Binding to link UI components with the
+ *      HomeViewModel.
+ * ==========================================================================
+ */
 package com.rho.studio.ui.features.home
 
 import android.view.LayoutInflater

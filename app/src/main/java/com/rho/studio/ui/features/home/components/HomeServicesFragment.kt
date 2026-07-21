@@ -1,3 +1,26 @@
+/**
+ * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
+ * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
+ * ██████╔╝███████║██║   ██║    ███████╗   ██║   ██║   ██║██║  ██║██║██║   ██║
+ * ██╔══██╗██╔══██║██║   ██║    ╚════██║   ██║   ██║   ██║██║  ██║██║██║   ██║
+ * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
+ * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
+ *
+ * ==========================================================================
+ * File:         HomeServicesFragment.kt
+ * Author:       Alexis Tercero
+ * Email:        alexis.tercero@rho.studio
+ * Date:         2026-07-21
+ * ==========================================================================
+ * Description:
+ *      A sub-fragment of the Home feature that implements an MVVM pattern
+ *      to display a grid of services. It utilizes a shared HomeViewModel
+ *      to observe service data and populates a RecyclerView via
+ *      ServiceAdapter. This component leverages ViewBinding and
+ *      GridLayoutManager to provide a responsive 2-column layout
+ *      representative of the platform's core offerings.
+ * ==========================================================================
+ */
 package com.rho.studio.ui.features.home.components
 
 import androidx.fragment.app.viewModels
