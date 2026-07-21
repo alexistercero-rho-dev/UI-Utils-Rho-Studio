@@ -12,4 +12,11 @@
     <string name="error_password_required">Password is required</string>
     <string name="error_password_length">Password must be at least 6 characters</string>
     <string name="success_login">Login successful! Welcome back.</string>
+    <string name="welcome_user">Welcome, %s!</string>
+    <string name="logout">Logout</string>
+    <string name="home_title">Home Dashboard</string>
+    <string name="module_inventory">Inventory</string>
+    <string name="module_sales">Sales</string>
+    <string name="module_customers">Customers</string>
+    <string name="module_reports">Reports</string>
 </resources>

@@ -10,6 +10,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="rho_red">#D32F2F</color>
+    <color name="rho_strong_gray">#333333</color>
     <color name="error">#FF0000</color>
     <color name="success">#4CAF50</color>
 </resources>
