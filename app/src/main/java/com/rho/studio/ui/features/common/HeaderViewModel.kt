@@ -7,49 +7,35 @@
  * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
  *
  * ==========================================================================
- * File:         PageHeaderFragment.kt
+ * File:         HeaderViewModel.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
  * Date:         2026-07-21
  * ==========================================================================
  * Description:
- *      A reusable header fragment for pages.
- *      Uses HeaderViewModel to source user data and accepts a title argument.
+ *      ViewModel for the reusable PageHeaderFragment.
+ *      Decouples the header from feature-specific ViewModels by sourcing
+ *      user data directly from the SessionManager.
  * ==========================================================================
  */
 package com.rho.studio.ui.features.common
 
-import android.os.Bundle
-import androidx.fragment.app.viewModels
-import com.rho.studio.ui.BR
-import com.rho.studio.ui.R
-import com.rho.studio.ui.core.base.BaseFragment
-import com.rho.studio.ui.databinding.FragmentPageHeaderBinding
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.rho.studio.ui.core.base.BaseViewModel
+import com.rho.studio.ui.core.manager.SessionManager
+import com.rho.studio.ui.core.model.User
 
-/**
- * A reusable header fragment for pages.
- * Uses HeaderViewModel to source user data and accepts a title argument.
- */
-class PageHeaderFragment : BaseFragment<FragmentPageHeaderBinding, HeaderViewModel>() {
-    override val viewModel: HeaderViewModel by viewModels()
-    override val layoutId: Int = R.layout.fragment_page_header
-    override val bindingVariable: Int = BR.viewModel
+class HeaderViewModel : BaseViewModel() {
 
-    companion object {
-        private const val ARG_TITLE = "arg_title"
+    private val sessionManager = SessionManager.getInstance()
+    
+    val currentUser: LiveData<User?> = sessionManager.currentUser
 
-        fun newInstance(title: String): PageHeaderFragment {
-            val fragment = PageHeaderFragment()
-            val args = Bundle()
-            args.putString(ARG_TITLE, title)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
 
-    override fun initializeViews() {
-        arguments?.getString(ARG_TITLE)?.let {
-            viewModel.setTitle(it)
-        }
+    fun setTitle(newTitle: String) {
+        _title.value = newTitle
     }
 }

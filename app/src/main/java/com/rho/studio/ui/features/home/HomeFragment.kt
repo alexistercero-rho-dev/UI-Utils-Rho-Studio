@@ -51,7 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private fun setupChildFragments() {
         childFragmentManager.beginTransaction().apply {
-            replace(R.id.header_container, PageHeaderFragment())
+            replace(R.id.header_container, PageHeaderFragment.newInstance(getString(R.string.home_title)))
             replace(R.id.services_container, HomeServicesFragment())
             replace(R.id.footer_container, PageFooterFragment())
             commitAllowingStateLoss()
