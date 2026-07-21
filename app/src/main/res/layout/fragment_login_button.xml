@@ -13,7 +13,7 @@
      * File:         fragment_login_button.xml
      * Author:       Alexis Tercero
      * Email:        alexis.tercero@rho.studio
-     * Date:         2026-02-23
+     * Date:         2026-07-21
      * ==========================================================================
      * Description: Button fragment triggers login
      * ==========================================================================
@@ -32,12 +32,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login"
             android:enabled="@{viewModel.isFormValid}"
-            app:toastMessage="@{viewModel.toastMessage}"
-            style="@style/Widget.MaterialComponents.Button" />
+            android:text="@string/login"
+            app:rippleColor="@color/silver_gray"
+            app:strokeColor="@color/rho_strong_gray"
+            app:toastMessage="@{viewModel.toastMessage}" />
 
         <ProgressBar
             android:id="@+id/progressBar"

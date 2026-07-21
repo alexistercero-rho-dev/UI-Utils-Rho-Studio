@@ -2,6 +2,26 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--
+     * ██████╗ ██╗  ██╗ ██████╗     ███████╗████████╗██╗   ██╗██████╗ ██╗ ██████╗
+     * ██╔══██╗██║  ██║██╔═══██╗    ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██║██╔═══██╗
+     * ██████╔╝███████║██║   ██║    ███████╗   ██║   ██║   ██║██║  ██║██║██║   ██║
+     * ██╔══██╗██╔══██║██║   ██║    ╚════██║   ██║   ██║   ██║██║  ██║██║██║   ██║
+     * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
+     * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
+     *
+     * ==========================================================================
+     * File:         fragment_home.xml
+     * Author:       Alexis Tercero
+     * Email:        alexis.tercero@rho.studio
+     * Date:         2026-07-21
+     * ==========================================================================
+     * Description: The primary layout for the Home feature,
+     *              designed as a data-driven dashboard that leverages
+     *              Android Data Binding and a dynamic grid system.
+     * ==========================================================================
+    -->
+
     <data>
         <variable
             name="viewModel"
@@ -11,7 +31,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@drawable/bg_login_gradient">
 
         <FrameLayout
             android:id="@+id/header_container"
