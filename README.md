@@ -1,55 +1,18 @@
-# UI-Utils-Rho-Studio
-Reusable fragments
+# Rho Studio UI App
+#### An Android View System app.
 
-```mermaid
-classDiagram
-    class Credentials {
-        +String email
-        +String password
-        +Constructor(email: String, password: String)
-    }
+<img width="448" height="754" alt="logintohomepageMVVM" src="https://github.com/user-attachments/assets/b7541cdc-13a0-46af-9a21-95a79c4d8f68" />
 
-    class LoginViewModel {
-        -Credentials credentialslive
-        -String successMessage
-        -String errorMessage
-        +String? toastMessage
-        +String? userEmail
-        +String? userPassword
-        +onButtonClicked()
-        -isValid(): Boolean
-    }
+## Architecture
 
-    class BaseObservable {
-        <<abstract>>
-        +notifyPropertyChanged()
-    }
+- MVVM Architecture for managing the app and code.
+- Single-activity Android architecture.
+- Android View System for UI.
+- Session manager.
 
-    class BR {
-        <<generated>>
-        +Int userEmail
-        +Int userPassword
-        +Int toastMessage
-    }
+### Current navigation graph
 
-    class ActivityMainBinding {
-        +LoginViewModel loginViewModel
-        +executePendingBindings()
-    }
+<img width="1319" height="934" alt="image" src="https://github.com/user-attachments/assets/66de0f69-e1ef-42e7-a9a1-849000be5250" />
 
-    class MainActivity {
-        +onCreate()
-        -ActivityMainBinding activityMainBinding
-    }
 
-    class BindingAdapters {
-        +runMe(view: View, message: String?)
-    }
-
-    LoginViewModel --|> BaseObservable
-    LoginViewModel *-- Credentials
-    LoginViewModel ..> BR : uses
-    MainActivity --> ActivityMainBinding
-    ActivityMainBinding --> LoginViewModel
-    BindingAdapters --> LoginViewModel : observes toastMessage
-```
+[**Rho.Studio®**](https://rho.studio/)
