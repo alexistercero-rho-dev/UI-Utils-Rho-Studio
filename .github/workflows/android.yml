@@ -32,4 +32,4 @@ jobs:
       uses: actions/upload-artifact@v7.0.1
       with:
         name: RhoStudioUI
-        path: app/build/outputs/apk/release/v100/RhoStudioUI.apk
+        path: app/build/outputs/apk/debug/RhoStudioUI.apk
