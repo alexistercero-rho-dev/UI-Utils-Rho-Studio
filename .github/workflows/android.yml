@@ -3,9 +3,9 @@ name: Android CI/CD Rho.Studio®
 on:
   workflow_dispatch: 
   push:
-    branches: [ "15-ui-migration-compose" ]
+    branches: [ "19-compose-migration-review" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "dev" , "pre-release" , "main" ]
 
 jobs:
   build:
