@@ -10,18 +10,18 @@
  * File:         SessionRepository.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-14
+ * Date:         2026-08-04
  * ==============================================================================================
  * Description: Repository for persisting session data.
  * ==============================================================================================
  */
-package com.rho.studio.ui.core.repository
+package com.rho.studio.ui.core.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
-import com.rho.studio.ui.core.model.User
+import com.rho.studio.ui.core.domain.model.User
 
 /**
  * Interface defining the persistence operations for user sessions.
