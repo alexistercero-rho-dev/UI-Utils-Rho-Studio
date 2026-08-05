@@ -35,21 +35,6 @@ android {
     buildFeatures {
         compose = true
     }
-
-    sourceSets {
-        getByName("main") {
-            // Java/Kotlin source directories
-            java.srcDirs(
-                "src/main/java"  // This includes everything under java/
-                // No need to list each feature separately
-            )
-
-            // Resource directories - THIS IS KEY FOR FEATURE RESOURCES
-            res.srcDirs(
-                "src/main/res"                          // Global resources
-            )
-        }
-    }
 }
 
 // Add the new DSL here
@@ -60,6 +45,11 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(path = ":core:domain"))
+    implementation(project(path = ":core:data"))
+    implementation(project(path = ":core:ui"))
+    implementation(project(path = ":features:auth"))
+    implementation(project(path = ":features:home"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -71,7 +61,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.gson)
     implementation(libs.material)

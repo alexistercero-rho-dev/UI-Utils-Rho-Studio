@@ -10,7 +10,7 @@
  * File:         BaseViewModel.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-15
+ * Date:         2026-08-05
  * ==============================================================================================
  * Description:
  *  The BaseViewModel is an abstract base class designed for the Rho Studio UI architecture.
@@ -19,20 +19,21 @@
  *  all feature-specific ViewModels.
  *
  *  Key Features
- *      •Automatic Loading State: Integrated tracking of background tasks.
- *      •Safe Coroutine Execution: Built-in exception handling to prevent app crashes.
- *      •Job Management: Automatic cancellation of active coroutines when the ViewModel is cleared.
- *      •UI Communication: Standardized LiveData streams for errors and toast notifications.
+ *      • Automatic Loading State: Integrated tracking of background tasks via StateFlow.
+ *      • Safe Coroutine Execution: Built-in exception handling wrappers to prevent app crashes.
+ *      • Job Management: Tracking and automatic cancellation of active coroutines.
+ *      • UI Communication: Standardized StateFlow streams for errors and toast notifications.
  * ==============================================================================================
  */
-package com.rho.studio.ui.core.base
+package com.rho.studio.ui.core.ui.base
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -49,39 +50,35 @@ import kotlinx.coroutines.launch
  *
  *  •Safe Coroutine Execution: Built-in exception handling to prevent app crashes.
  *
- *  •Job Management: Automatic cancellation of active coroutines when the ViewModel is cleared.
+ *  •Job Management: Automatic tracking and cancellation of active coroutines when the ViewModel is cleared.
  *
- *  •UI Communication: Standardized LiveData streams for errors and toast notifications.
+ *  •UI Communication: Standardized StateFlow streams for errors and toast notifications.
  *
  * In standard Android development, if a coroutine launched in viewModelScope
- * throws an exception that isn't caught, the entire app crashes.By using launchSafe,
- * avoiding repetitive boilerplate code. Instead of writing try-catch in every single function
+ * throws an exception that isn't caught, the entire app crashes. By using `launchSafe`
+ * or `launchWithLoading`, you avoid repetitive boilerplate code. Instead of writing
+ * try-catch in every single function, the base class handles exceptions globally
+ * via `handleError` while still allowing optional local error handling.
  */
 abstract class BaseViewModel : ViewModel() {
 
-    // Loading state
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    // Error messages
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error.asStateFlow()
 
-    // Toast messages (one-time)
-    private val _toastMessage = MutableLiveData<String?>()
-    val toastMessage: LiveData<String?> = _toastMessage
+    private val _toastMessage = MutableStateFlow<String?>(null)
+    val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
 
-    // Track active jobs
     private val jobs = mutableListOf<Job>()
 
-    /**
-     * Launch a coroutine with automatic loading state
-     */
+    /** Launch a coroutine with automatic loading state*/
     protected fun launchWithLoading(
         block: suspend CoroutineScope.() -> Unit,
         onError: ((Exception) -> Unit)? = null
     ): Job {
-        _isLoading.postValue(true)
+        _isLoading.value = true
 
         val job = viewModelScope.launch {
             try {
@@ -90,7 +87,7 @@ abstract class BaseViewModel : ViewModel() {
                 handleError(e)
                 onError?.invoke(e)
             } finally {
-                _isLoading.postValue(false)
+                _isLoading.value = false
             }
         }
 
@@ -98,15 +95,6 @@ abstract class BaseViewModel : ViewModel() {
         return job
     }
 
-    /**
-     * Executes a coroutine block safely within the [viewModelScope].
-     *
-     * This function wraps the execution of the [block] in a try-catch block.
-     * If an exception occurs during the execution of the coroutine, it is caught
-     * and passed to [handleError], preventing the app from crashing.
-     *
-     * @param block The suspendable lambda expression to be executed.
-     */
     protected fun launchSafe(
         block: suspend CoroutineScope.() -> Unit,
         onError: ((Exception) -> Unit)? = null
@@ -136,36 +124,27 @@ abstract class BaseViewModel : ViewModel() {
      */
     protected open fun handleError(e: Exception) {
         e.printStackTrace()
-        _error.postValue(e.message ?: "An error occurred")
+        _error.value = e.message ?: "An error occurred"
     }
 
-    /** Clear current error message */
     fun clearError() {
         _error.value = null
     }
 
-    // ==================== TOAST MESSAGES ====================
-
-    /** Show a one-time toast message to user */
     protected fun showToast(message: String) {
-        _toastMessage.postValue(message)
+        _toastMessage.value = message
     }
 
-    /** Clear current toast message */
     fun clearToastMessage() {
         _toastMessage.value = null
     }
 
-    // ==================== JOB MANAGEMENT ====================
-
-    /** Cancel all active coroutine jobs */
     fun cancelAllJobs() {
         jobs.forEach { it.cancel() }
         jobs.clear()
     }
 
     override fun onCleared() {
-        cancelAllJobs()  // Prevent memory leaks
-        //super.onCleared()
+        cancelAllJobs()
     }
 }
