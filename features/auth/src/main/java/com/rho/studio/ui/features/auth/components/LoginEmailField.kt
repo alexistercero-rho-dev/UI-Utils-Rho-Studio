@@ -6,16 +6,15 @@
  * ██║  ██║██║  ██║╚██████╔╝    ███████║   ██║   ╚██████╔╝██████╔╝██║╚██████╔╝
  * ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝
  *
- * ============================================================================
- * File:         LoginEmailField.kt (composable UI)
+ * ==============================================================================================
+ * File:         LoginEmailField.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-29
- * ============================================================================
- * Description:  A reusable Jetpack Compose component that provides a styled
- *               email input field for the Login screen, featuring validation
- *               state handling and integration with LoginViewModel.
- * ============================================================================
+ * Date:         2026-08-06
+ * ==============================================================================================
+ * Description: A compose text input component for user email addresses, integrated with
+ *              LoginViewModel for state management, validation feedback, and styling.
+ * ==============================================================================================
  */
 package com.rho.studio.ui.features.auth.components
 
@@ -28,34 +27,28 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import com.rho.studio.ui.R
+import com.rho.studio.ui.core.ui.R
 import com.rho.studio.ui.features.auth.LoginViewModel
-import com.rho.studio.ui.ui.theme.ErrorRed
-import com.rho.studio.ui.ui.theme.RhoRed
-import com.rho.studio.ui.ui.theme.RhoStrongGray
-import com.rho.studio.ui.ui.theme.SilverGray
-import com.rho.studio.ui.ui.theme.TitleGray
+import com.rho.studio.ui.core.ui.theme.ErrorRed
+import com.rho.studio.ui.core.ui.theme.RhoStrongGray
+import com.rho.studio.ui.core.ui.theme.SilverGray
+import com.rho.studio.ui.core.ui.theme.TitleGray
 
 @Composable
 fun LoginEmailField(
     viewModel: LoginViewModel,
     modifier: Modifier = Modifier
 ) {
-    val emailError by viewModel.emailError.observeAsState()
+    val emailError by viewModel.emailError.collectAsState()
 
     OutlinedTextField(
         value = viewModel.email,
-        onValueChange = { 
-            viewModel.onEmailChanged(it)
-        },
+        onValueChange = { viewModel.onEmailChanged(it) },
         label = { Text(stringResource(R.string.email_hint)) },
         modifier = modifier.fillMaxWidth(),
         isError = emailError != null,

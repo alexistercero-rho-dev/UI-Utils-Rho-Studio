@@ -1,4 +1,4 @@
-package com.rho.studio.ui.ui.theme
+package com.rho.studio.ui.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
