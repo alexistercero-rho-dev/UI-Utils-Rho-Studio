@@ -10,7 +10,7 @@
  * File:         MainActivity.kt
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-29
+ * Date:         2026-08-04
  * ==========================================================================
  * Description:
  *      The primary entry point for the RHO Studio application, migrated to 
@@ -19,6 +19,8 @@
  *      Main Entry Point: Migrated MainActivity to ComponentActivity.
  *      Compose Navigation: Implemented a NavHost in MainActivity to handle routing
  *      based on SessionManager state, replacing nav_graph.xml.
+ *      State Management: Switched state observation from LiveData to StateFlow
+ *      using collectAsState() for better compatibility with Compose.
  * ==========================================================================
  */
 package com.rho.studio.ui
@@ -32,20 +34,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rho.studio.ui.core.manager.SessionManager
+import com.rho.studio.ui.core.data.manager.SessionManager
 import com.rho.studio.ui.features.auth.LoginScreen
 import com.rho.studio.ui.features.auth.LoginViewModel
 import com.rho.studio.ui.features.home.HomeScreen
 import com.rho.studio.ui.features.home.HomeViewModel
-import com.rho.studio.ui.ui.theme.UITheme
+import com.rho.studio.ui.core.ui.theme.UITheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -55,9 +59,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initializeManagers()
-
         setContent {
             UITheme {
                 MainContent()
@@ -71,10 +73,12 @@ class MainActivity : ComponentActivity() {
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         
-        sessionManager.error.observe(this) { error ->
-            error?.let {
-                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-                sessionManager.clearError()
+        lifecycleScope.launch {
+            sessionManager.error.collect { error ->
+                error?.let {
+                    Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
+                    sessionManager.clearError()
+                }
             }
         }
     }
@@ -82,16 +86,15 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun MainContent() {
         val navController = rememberNavController()
-        val isSessionChecked by sessionManager.isSessionChecked.observeAsState(false)
-        val isAuthenticated by sessionManager.isAuthenticated.observeAsState(false)
-        val isLoading by sessionManager.isLoading.observeAsState(false)
+        val isSessionChecked by sessionManager.isSessionChecked.collectAsState()
+        val isAuthenticated by sessionManager.isAuthenticated.collectAsState()
+        val isLoading by sessionManager.isLoading.collectAsState()
 
         if (!isSessionChecked) {
             LoadingScreen()
             return
         }
 
-        // Handle navigation based on auth state
         LaunchedEffect(isAuthenticated) {
             if (isAuthenticated) {
                 navController.navigate("home") {

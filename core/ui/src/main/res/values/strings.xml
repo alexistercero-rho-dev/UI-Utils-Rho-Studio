@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">RhoStudio UI</string>
+    <string name="rho_studio_app">Rho.Studio app</string>
+    <string name="login">Login</string>
+    <string name="email_hint">Email address</string>
+    <string name="password_hint">Password</string>
+    <string name="error_email_required">Email is required</string>
+    <string name="error_email_invalid">Please enter a valid email address</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_password_length">Password must be at least 6 characters</string>
+    <string name="success_login">Login successful! Welcome back.</string>
+    <string name="welcome_user">Welcome, %s!</string>
+    <string name="logout">Logout</string>
+    <string name="home_title">Home Dashboard</string>
+    <string name="module_inventory">Inventory</string>
+    <string name="module_sales">Sales</string>
+    <string name="module_customers">Customers</string>
+    <string name="module_reports">Reports</string>
+</resources>
