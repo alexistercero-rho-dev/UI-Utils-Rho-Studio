@@ -21,7 +21,7 @@ package com.rho.studio.ui.features.home
 import com.rho.studio.ui.core.ui.R
 import com.rho.studio.ui.core.ui.base.BaseViewModel
 import com.rho.studio.ui.core.data.manager.SessionManager
-import com.rho.studio.ui.core.ui.model.ServiceModule
+import com.rho.studio.ui.features.home.model.ServiceModule
 import com.rho.studio.ui.core.domain.model.User
 import com.rho.studio.ui.core.domain.usecase.LogoutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
