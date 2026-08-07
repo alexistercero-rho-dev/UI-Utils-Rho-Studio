@@ -10,24 +10,28 @@
  * File:         PageFooter.kt (composable UI)
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-29
+ * Date:         2026-08-06
  * ============================================================================
- * Description:  
- *      A persistent UI component placed at the bottom of the screen to 
- *      provide access to global session-level actions.
+ * Description:
+ *      A reusable footer component designed for consistent placement at the
+ *      bottom of screens to provide access to essential session-level
+ *      actions. It ensures a uniform user experience across different
+ *      modules by standardizing the appearance and behavior of the
+ *      logout mechanism.
  *
  *      Key Features:
- *          • Session Management: Provides a clear entry point for the user 
- *            to log out, delegating the operation to the HomeViewModel.
- *          • Distinct Styling: Utilizes the brand's primary red (rho_red) 
- *            for the logout action to signal its significance.
- *          • Layout Integration: Designed to span the full width of the 
- *            screen with standard padding, ensuring high touch-target visibility.
+ *          • Session Management: Provides a clear logout entry point,
+ *            delegating the action to the caller via a callback.
+ *          • Semantic Styling: Utilizes the brand's primary red (rho_red)
+ *            to visually communicate the destructive nature of the action.
+ *          • Adaptive Layout: Configured to span the full width with
+ *            standard padding for high touch-target visibility.
  * ============================================================================
  */
-package com.rho.studio.ui.features.common
+package com.rho.studio.ui.core.ui.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -37,17 +41,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rho.studio.ui.R
-import com.rho.studio.ui.features.home.HomeViewModel
+import com.rho.studio.ui.core.ui.R
 
 @Composable
 fun PageFooter(
-    viewModel: HomeViewModel,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TextButton(
-        onClick = { viewModel.logout() },
+        onClick = onLogoutClick,
         modifier = modifier
+            .navigationBarsPadding()
             .fillMaxWidth()
             .padding(16.dp),
         colors = ButtonDefaults.textButtonColors(

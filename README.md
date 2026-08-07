@@ -4,6 +4,10 @@ This report outlines the architecture design of the Rho Studio UI application.
 
 <img width="480" height="940" alt="Image" src="https://github.com/user-attachments/assets/3ad79c42-4806-4dcd-8bb0-920b2587a86d" />
 
+## Contributions
+
+Must follow the next requirements [CONTRIBUTION.md](CONTRIBUTION.md)
+
 ---
 
 ## 1. Executive Summary

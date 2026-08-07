@@ -10,22 +10,24 @@
  * File:         ServiceItem.kt (composable UI)
  * Author:       Alexis Tercero
  * Email:        alexis.tercero@rho.studio
- * Date:         2026-07-29
+ * Date:         2026-08-06
  * ============================================================================
- * Description:  
- *      A modular UI component representing an individual service entry 
- *      within the Home screen grid. It encapsulates the visual style 
+ * Description:
+ *      A modular UI component representing an individual service entry
+ *      within the Home screen grid. It encapsulates the visual style
  *      and interaction logic for a single ServiceModule.
  *
  *      Key Features:
- *          • Adaptive Styling: Dynamically sets its background color based 
+ *          • Adaptive Styling: Dynamically sets its background color based
  *            on the ServiceModule's resource definitions.
- *          • Geometric Design: Features a fixed aspect ratio and rounded 
+ *          • Geometric Design: Features a fixed 1:1 aspect ratio and rounded
  *            corners to maintain UI consistency across the service grid.
- *          • Localized Content: Automatically resolves and displays title 
+ *          • Localized Content: Automatically resolves and displays title
  *            strings from Android resource IDs.
- *          • Feedback: Built on Material 3 Button semantics to provide 
+ *          • Feedback: Built on Material 3 Button semantics to provide
  *            standard touch feedback and accessibility support.
+ *          • Scalable Grid Integration: Designed to be used within LazyVerticalGrid
+ *            for responsive dashboard layouts.
  * ============================================================================
  */
 package com.rho.studio.ui.features.home.components
@@ -42,7 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rho.studio.ui.core.model.ServiceModule
+import com.rho.studio.ui.features.home.model.ServiceModule
 
 @Composable
 fun ServiceItem(
